@@ -1,0 +1,93 @@
+<div class="wrapper" id="quiz">
+    <h1 class="col-lg-12">Discovering new fragrances by taking a lifestyle test</h1>
+    <p class="error test-desc col-lg-12" ng-show="serverError.length > 0">{{serverError}}</p>
+
+    <div ng-hide="hideGenderBtns" class="col-lg-12 gender-buttons-wrapper">
+        <p class="test-desc" ng-hide="showQuiz">The fragrance is:</p>
+        <div class="gender-buttons">
+            <button class="btn default" ng-repeat="gender in quizGenders" ng-click="populateQuiz(gender)" ng-class="{'active': selected === true, 'btn-slide': showQuiz == true}">{{gender.name}}</button>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+
+    <div ng-show="showQuiz" id="quizWrapper">
+        <div class="col-lg-3 col-md-3 col-sm-3" id="quizQuestions">
+            <p ng-repeat="question in quizQuestions" id="question-{{question.id}}" ng-click="setSelectedQuestion(question.id)" on-render
+               ng-class="{active: selectedQuestion == question.id}"><i class="fa" ng-class="{'fa-check': answers[question.id] != undefined}"></i>{{question.text}}</p>
+        </div>
+
+        <div class="col-lg-9 col-md-9 col-sm-9" id="quizAnswers">
+            <div class="answer-set" ng-repeat="question in quizQuestions" id="answer-{{question.id}}" ng-class="{'in-focus': selectedQuestion == question.id, 'answered': answers[question.id].length > 0 }">
+                <div class="show-on-phone">{{question.text}}</div>
+                <div class="btn-quiz" ng-repeat="answer in question.answers" ng-click="persist(question.id, answer.answerId)" ng-class="{'active': answers[question.id] == answer.answerId}" on-render>
+                    <span ng-if="answer.answerColor">{{answer.answerText}}</span>
+                    <span ng-if="answer.answerPictureURL">{{answer.answerText}}</span>
+                    <div class="image-box" ng-if="answer.answerPictureURL" ng-click="chooseAnswer()">
+                        <img ng-src="{{answer.answerPictureURL}}"></img>
+                    </div>
+                    <div class="color-box" ng-if="answer.answerColor"><span style="background: {{answer.answerColor}}"></span></div>
+                    <div class="text-box" ng-if="!answer.answerColor && !answer.answerPictureURL"><span>{{answer.answerText}}</span></div>
+                    <i class="fa" ng-class="{'fa-check': answers[question.id] == answer.answerId}"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12" id="questionNumber">
+            You answered <span class="emphasis">{{answersSize}}</span> out of <span class="emphasis">{{totalAnswers}}</span> questions.
+        </div>
+
+        <div class="col-lg-12">
+            <button class="btn special recommendations-button" ng-click="requestRecommendations()" ng-hide="showSearchResultsWrapper" ng-class="{'disabled': answersSize <= 5}">
+                <span ng-if="answersSize <= 5">Show me the recommendation</span>
+                <span ng-if="answersSize > 5 && answersSize != totalAnswers">Show me the recommendation</span>
+                <span ng-if="answersSize == totalAnswers">You have answered all questions. See what ScentSee recommends.</span>
+            </button>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="loader" ng-show="showRecommendationsLoader"></div>
+
+    <section class="search-results col-lg-12" ng-show="showSearchResultsWrapper">
+        <div class="recommendations-wrapper">
+            <p class="test-desc" ng-hide="showNoResultsStatus">Based on your lifestyle, ScentSee recommends</p>
+            <div class="perfume-box" ng-repeat="recom in recommendationsList | limitTo: resultsLimit" ng-click="toggleModal(recom)">
+                <p class="title">{{recom.name | limitTo: 20}}</p>
+                <p class="uppercase subtitle">{{recom.brand}}</p>
+                <div class="description">
+                    <span ng-repeat="(key, value) in recom.dominantClasses" ng-if="$index < 3">
+                        <span class="lowercase">{{scents[key].label}}</span>
+                        <div class="fill">
+                            <span ng-style="{'width': value + '%'}"></span>
+                        </div>
+                    </span>
+                    <img ng-src="{{getPhotoUrl(recom)}}" />
+                </div>
+                <button class="btn special" >See details & prices</button>
+            </div>
+        </div>
+        <div class="clear"></div>
+
+        <button class="btn special" ng-click="loadMoreRecommendations()" ng-show="showMoreRecommmendationsBtn">See more recommendations</button>
+
+        <div class="reset-buttons" ng-show="showResetBtns">
+            <p class="test-desc error" ng-show="showNoResultsStatus">Unfortunately, we haven't found any suitable matches</p>
+            <button class="btn special" ng-click="resetQuiz()">Take the quiz again</button>
+            <a class="btn-link" ng-href="#/preferences">Search by previous preferences</a>
+        </div>
+        <div ng-show="recommendationsList.length > 0" class="copy-uri">
+            <input type="text" id="shareUriInput" ng-model="shareUri" select-on-click />
+            <button class="btn special" ngclipboard data-clipboard-target="#shareUriInput" ng-class="{'copied':isCopied}" ng-click="isCopied= !isCopied">
+                <span ng-if="!isCopied">copy link</span>
+                <span ng-if="isCopied">copied<i class="fa fa-check"></i></span>
+            </button>
+        </div>
+        <p ng-show="recommendationsList.length > 0" class="share-on-fb">Show your friends the fragrances that suit you! <share uri="shareUri"/></p>
+    </section>
+    <div class="clear"></div>
+</div>
+
+<modal visible="showModal" model="modalContent"></modal>
+
+

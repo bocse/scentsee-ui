@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="en" ng-app="scentSeeAnalyticsApp"  itemscope itemtype="http://schema.org/Product" >
+    <head>
+        <title>ScentSee Analytics - Explore the structure of fragrance</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="author" content="ScentSee.com">
+        <meta name="description" content="Explore the structure of fragrance.">
+        <meta name="keywords" content="perfume,discover perfume, analytics, fragrance analytics">
+		<meta name="copyright" content="&copy; 2016 ScentSee. All rights reserved." />
+        <meta name="Resource-type" content="Document">
+
+		<!-- Schema.org markup for Google+ -->
+		<meta itemprop="name" content="ScentSee ">
+		<meta itemprop="description" content="Explore the structure of fragrance.">
+		<meta itemprop="image" content="http://en.ScentSee.com/images/analytics.jpg">
+
+		<!-- Twitter Card data -->
+		<meta name="twitter:card" content="product">
+		<meta name="twitter:site" content="@publisher_handle">
+		<meta name="twitter:title" content="ScentSee - Explore the structure of fragrance.">
+		<meta name="twitter:description" content="Explore the structure of fragrance.">
+
+		<meta name="twitter:image" content="http://en.ScentSee.com/images/analytics.jpg">
+
+		<!-- Open Graph data -->
+        <meta property="og:url" content="http://en.scentsee.com/analytics.html#/analytics" />
+		<meta property="og:title" content="ScentSee - Explore the structure of fragrance" />
+		<meta property="og:type" content="website" />
+
+		<meta property="og:image" content="http://en.scentsee.com/images/analytics.jpg" />
+		<meta property="og:description" content="Explore the structure of fragrance." />
+		<meta property="og:site_name" content="ScentSee" />
+
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="styles/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="styles/rzslider.min.css">
+        
+        <link rel="stylesheet" type="text/css" href="styles/selectize.default.css">
+        <link rel="stylesheet" type="text/css" href="styles/app.css">
+    </head>
+
+    <body>
+    <div class="page-wrapper">
+    	<header ng-controller="LandingCtrl">
+    		<div class="container header-contents desktop">
+				<ul class="col-lg-4 col-md-4 col-sm-4">
+					<li ng-class="{ active: isActive('/preferences')}"><a ng-href="#/preferences">Discover from previous preference</a></li>
+					<li ng-class="{ active: isActive('/quiz')}"><a ng-href="#/quiz">Discover by lifestyle</a></li>
+				</ul>
+				<div id="logo" class="col-lg-4 col-md-4 col-sm-4" ng-mouseenter="imgsrc = 'images/logo-color.png'"
+					 ng-mouseleave="imgsrc = 'images/logo.png'" ng-init="imgsrc = 'images/logo.png'">
+					<a ng-href="#landing"><img ng-src="{{imgsrc}}" src="images/logo.png"   /></a>
+				</div>
+				<ul class="col-lg-4 col-md-4 col-sm-4">
+                    <li><a href="#"><img src="images/en.png" alt="ScentSee in English" /></a></li>
+                    <li><a href="http://ro.scentsee.com"><img src="images/ro.png" alt="ScentSee în română" /></a></li>
+                    <li ng-class="{ active: isActive('/contact')}"><a ng-href="#/contact">contact</a></li>
+					<li ng-class="{ active: isActive('/login')}" ng-show="isLoggedIn() == false"><a ng-href="#/login">business login</a></li>
+					<li ng-class="{ active: isActive('/premium')}" ng-show="isLoggedIn() == true"><a ng-href="#/premium">premium</a></li>
+					<li ng-class="{ active: isActive('/logout')}" ng-show="isLoggedIn() == true"><a ng-href="#" ng-click="logout()">logout</a></li>
+				</ul>
+    		</div>
+    		<div class="container header-contents phone">
+				<div id="logo" class="col-sm-4">
+					<a ng-href="#landing"><img ng-src="images/logo.png" /></a>
+				</div>
+				<ul class="col-sm-8">
+					<li ng-class="{ active: isActive('/preferences')}"><a ng-href="#/preferences">Discover from previous preferences</a></li>
+					<li ng-class="{ active: isActive('/quiz')}"><a ng-href="#/quiz">Discover by lifestyle</a></li>
+					<li ng-class="{ active: isActive('/contact')}" class="hide-on-phone"><a ng-href="#/contact">contact</a></li>
+					<li ng-class="{ active: isActive('/login')}" ng-show="isLoggedIn() == false"><a ng-href="#/login">business login</a></li>
+					<li ng-class="{ active: isActive('/premium')}" ng-show="isLoggedIn() == true"><a ng-href="#/premium">premium</a></li>
+					<li ng-class="{ active: isActive('/logout')}" ng-show="isLoggedIn() == true"><a ng-href="#" ng-click="logout()">logout</a></li>
+				</ul>
+    		</div>
+		</header>
+		
+        <div class="container">
+          <div ng-view></div>
+        </div>
+        
+        <div class="clearfix"></div>
+        
+        <footer>
+        	<div class="container">
+        		<div class="col-lg-2 col-md-3 col-sm-3 no-text-transform hide-on-phone">
+					<h4>About</h4>
+					<a href="/" class="underline">ScentSee</a> helps you explore the world of fragrance and to discover the one suited for you or your loved ones.
+				</div>
+        		
+        		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+					<h4>About ScentSee</h4>
+		        	<ul class="footer-nav">
+						<li ng-class="{ active: isActive('/how-it-works')}"><a href="#/how-it-works">How does it work?</a></li>
+                        <li><a href="http://get.scentSee.com">ScentSee for business</a></li>
+                        <li><a href="http://scentsee.com/jsondoc-ui.html?url=http://scentsee.com/jsondoc">ScentSee API</a></li>
+		        	</ul>
+				</div>
+				
+        		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+        			<h4>More</h4>
+        			<ul class="footer-nav">
+                        <li ng-class="{ active: isActive('/partners')}"><a ng-href="#/partners">Partners</a></li>
+						<li ng-class="{ active: isActive('/stores')}"><a ng-href="#/stores">In stores</a></li>
+						<li ng-class="{ active: isActive('/scents')}"><a ng-href="#/scents">Olfactory types</a></li>
+						<li ng-class="{ active: isActive('/contact')}" class="show-on-phone"><a ng-href="#/contact">Contact</a></li>
+        			</ul>
+				</div>
+				
+				<div class="col-lg-3 col-md-4 col-sm-4 col-xs-4" id="socialIcons">
+					<h4>Social</h4>
+					<ul>
+						<li id="fbIcon"><a target="_blank" href="https://www.facebook.com/ScentSee/"></a></li>
+						<li id="twitIcon"><a target="_blank" href="https://twitter.com/ScentSee"></a></li>
+						<li id="emailIcon"><a target="_blank" href="mailto:bogdan@scentSee.com"></a></li>
+					</ul>
+				</div>
+				<div class="clear"></div>
+	        	<p class="col-lg-6 col-md-6 col-sm-6" id="copyright">&copy;ScentSee 2016. All rights reserved.</p>
+        	</div>
+        </footer>
+    </div>
+
+    <!--Start of Tawk.to Script-->
+
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/5725e282b7ecf08e7d8c8a02/default';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+
+    <!--End of Tawk.to Script-->
+	 
+	 <!-- GA Script -->
+	 <script>
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-75762985-1', 'auto');
+    ga('send', 'pageview');
+
+	 </script>
+	 
+	 <script type="application/javascript" src="js/lib/jquery-2.1.4.min.js"></script>
+	 <script type="application/javascript" src="js/lib/selectize.min.js"></script>
+	 <script type="application/javascript" src="js/lib/angular.min.js"></script>
+	 <script type="application/javascript" src="js/lib/angular-route.min.js"></script>
+	 <script type="application/javascript" src="js/lib/angular-animate.min.js"></script>
+	 <script type="application/javascript" src="js/lib/angular-cookies.min.js"></script>
+	 <script type="application/javascript" src="js/lib/angular-selectize.js"></script>
+	 <script type="application/javascript" src="js/lib/angular-smooth-scroll.js"></script>
+     <script type="application/javascript" src="js/lib/Chart.js"></script>
+     <script type="application/javascript" src="js/lib/angular-chart.min.js"></script>
+	 <script type="application/javascript" src="js/lib/clipboard.min.js"></script>
+	 <script type="application/javascript" src="js/lib/ngclipboard.min.js"></script>
+	 <script type="application/javascript" src="js/lib/rzslider.min.js"></script>
+	 <script type="application/javascript" src="js/lib/bootstrap.min.js"></script>
+	 <script type="application/javascript" src="js/lib/base64.js"></script>
+	 <script type="application/javascript" src="js/data-en/affiliates.js"></script>
+	 <script type="application/javascript" src="js/data-en/aromaticTypesFrontEnd.js"></script>
+	 <script type="application/javascript" src="js/data-en/questionsFrontEnd.js"></script>
+	 <script type="application/javascript" src="js/app/analytics-en.js"></script>
+	 <script type="application/javascript" src="js/app/services.js"></script>
+	 <script type="application/javascript" src="js/app/directives.js"></script>
+	 <script type="application/javascript" src="js/app/controllers/landing.js"></script>
+	 <script type="application/javascript" src="js/app/controllers/login.js"></script>
+	 <script type="application/javascript" src="js/app/controllers/preferences.js"></script>
+	 <script type="application/javascript" src="js/app/controllers/quiz.js"></script>
+	 <script type="application/javascript" src="js/app/controllers/premium.js"></script>
+	 <script type="application/javascript" src="js/app/controllers/share.js"></script>
+	 <script type="application/javascript" src="js/app/controllers/scents.js"></script>
+    <script type="application/javascript" src="js/app/controllers/visualize.js"></script>
+    <script type="application/javascript" src="js/app/controllers/analytics.js"></script>
+    </body>
+</html>

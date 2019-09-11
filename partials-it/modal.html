@@ -1,0 +1,37 @@
+<div class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <div class="modal-body">
+            	<div class="col-lg-6 col-md-6 col-sm-6">
+					<img class="modal-img" ng-src="{{getPhotoUrl(modalModel)}}" ng-if="modalModel"/>
+					<div class="description">
+						<span ng-repeat="(key, value) in modalModel.dominantClasses" ng-if="$index < 5">
+							<span class="lowercase">{{modalScents[key].label}}
+								
+							</span>
+							<div class="fill scent-label">
+								<span ng-style="{'width': value + '%'}"></span>
+								<span class="scent-description">
+									{{modalScents[key].description}}
+								</span>
+							</div>
+						</span>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="perfume-name">
+						<p class="title">{{modalModel.name}}</p>
+						<p class="uppercase subtitle">{{modalModel.brand}}</p>
+					</div>
+					<div class="buy-options" ng-repeat="(key, value) in modalModel.affiliateProducts">
+				 		<p>Buy on <span class="uppercase">{{key}}</span></p>
+						<div ng-repeat="val in value">
+				 			<a target="_blank" ng-href="{{val.affiliateURL}}"><span>{{val.quantity}}ml</span> - price <span class="emphasis">{{val.price}}{{val.currency}}</span></a>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="loader" ng-show="showRecommendationsLoader"></div>
+
+<div class="wrapper col-lg-12 col-md-12" id="pref">
+
+	<h1>Visualize your fragrance</h1>
+<div>
+    <div ng-repeat="particle in particles.slice().reverse()">
+    <div class="particle-3" ng-if="particle.visible == true" style="position:absolute"
+         ng-style="{left:particle.x,
+                       top:particle.y}">
+        <img ng-src="{{particle.image}}"  ng-style="{
+                        width:particle.w,
+                        height:particle.h}"
+             />
+    </div>
+    </div>
+</div>
+
+</div>
+		
+

@@ -1,0 +1,42 @@
+
+<div class="wrapper static" id="howItWorks">
+    <div class="col-lg-12">
+        <h1>ScentSee Showcase</h1>
+        <p>Experience the capabilities of ScentSee beyond simple <a href="#landing">perfume recommendation</a>: exploring, understanding the most used note types, visualizing how perfumes unfold and even creating your own signature fragrance.</p>
+        <p>ScentSee can boost your fragrance business by offering a unique customer experience, by allowing you to reach out through online channels and by supporting your staff in being informed and up-to-date.</p>
+        <p>If you want to find out more about how ScentSee can boost your fragrance business, <a href="#/contact"> contact us</a></p>
+        <h4 ng-show="isLoggedIn() == false"><a href="#request-invite"> Request an invite for ScentSee Labs now.</a></h4>
+    </div>
+    <div class="col-lg-6 col-md-6 space-top ">
+        <h2><a  ng-href="{{isLoggedIn() == true ? '#premium' : '#request-invite?destination=/premium'}}">Advanced Fragrance Search</a></h2>
+        <p>Search for the ideal fragrance, by choosing likes and dislikes, as well as price ranges.</p>
+        <p><a ng-href="{{isLoggedIn() == true ? '#premium' : '#request-invite?destination=/premium'}}"><img class="showcaseImage" src="images/labs-07.png"/></a></p>
+    </div>
+    <div class="col-lg-6 col-md-6 space-top ">
+        <h2><a  ng-href="#visualize">Visualize</a></h2>
+        <p>See how the notes of your fragrance unfold with an interactive animation.</p>
+        <p><a ng-href="#visualize"><img class="showcaseImage" src="images/labs-04.png"/></a></p>
+    </div>
+    <div class="col-lg-6 col-md-6 space-top ">
+        <h2><a ng-href="{{isLoggedIn() == true ? '#navigation' : '#request-invite?destination=/navigation'}}">Navigation</a></h2>
+        <p>Explore new fragrances by understanding what sets them apart.</p>
+        <p><a ng-href="{{isLoggedIn() == true ? '#navigation' : '#request-invite?destination=/navigation'}}"><img class="showcaseImage" src="images/labs-06.png"/></a></p>
+    </div>
+    <div class="col-lg-6 col-md-6 space-top">
+        <h2><a  ng-href="{{isLoggedIn() == true ? '#network' : '#request-invite?destination=/network'}}">Network</a></h2>
+        <p>Immerse yourself in the relationships between perfumes.</p>
+        <p><a ng-href="{{isLoggedIn() == true ? '#network' : 'request-invite?destination=/network'}}"><img class="showcaseImage" src="images/labs-01.png"/></a></p>
+    </div>
+    <div class="col-lg-6 col-md-6 space-top ">
+        <h2><a  ng-href="{{isLoggedIn() == true ? '#architect' : '#request-invite?destination=/architect'}}">Fragrance Architect</a></h2>
+        <p>Design a signature fragrance, that uniquely matches your lifestyle and personality.</p>
+        <p><a ng-href="{{isLoggedIn() == true ? '#architect' : '#request-invite?destination=/architect'}}"><img class="showcaseImage" src="images/labs-03.png"/></a></p>
+    </div>
+    <div class="col-lg-6 col-md-6 space-top">
+        <h2><a  ng-href="{{isLoggedIn() == true ? '#analytics' : '#request-invite?destination=/analytics'}}">Analytics</a></h2>
+        <p>See what note type each brand uses most each year.</p>
+        <p><a ng-href="{{isLoggedIn() == true ? '#analytics' : '#request-invite?destination=/analytics'}}"><img class="showcaseImage" src="images/labs-05.png"/></a></p>
+    </div>
+    <div class="clear"></div>
+</div>
+

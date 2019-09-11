@@ -1,0 +1,23 @@
+<div class="wrapper col-lg-12" id="login">
+	<form novalidate class="form-signin" name="form">
+		<h1 class="form-signin-heading">Sign in</h1>
+		<div class="form-group">
+			<label for="inputEmail" class="sr-only">Email</label>
+			<input type="email" id="email" name="email" class="form-control" placeholder="Email" ng-required="true" autofocus="true" ng-minlength="3" ng-model="user.email" email-validator>
+			<i class="fa" ng-class="{'fa-times': form.email.$dirty && form.email.$invalid, 'fa-check': form.email.$valid}"></i>
+		</div>
+		
+		<div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$invalid, 'is-valid': form.password.$valid} ">
+		    <label for="inputPassword" class="sr-only">Password</label>
+			<input type="password" id="password" name="password" class="form-control" placeholder="Parola" ng-required="true" ng-minlength="6" ng-model="user.password">
+			<i class="fa" ng-class="{'fa-times': form.password.$dirty && form.password.$invalid, 'fa-check': form.password.$valid}"></i>
+		</div>
+		
+    	<button class="btn special" type="submit" ng-click="authenticate(user)">Sign in</button>
+    	
+    	<p class="error" ng-show="authenticationMessage.length > 0">{{authenticationMessage}}</p>
+        <p>Business accounts are available to perfumers, partners and merchants using ScentSee integrated recommendation solutions.</p>
+        <p>For requesting a premium account, <a href="#/contact"> please contact us</a>.</p>
+	</form>
+</div>
+

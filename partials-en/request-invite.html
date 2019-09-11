@@ -1,0 +1,30 @@
+<div class="wrapper col-lg-12" id="login">
+	<form novalidate class="form-signin" name="form">
+		<h1 class="form-signin-heading">Request an invite</h1>
+		<div class="form-group">
+			<label for="inputEmail" class="sr-only">Email</label>
+			<input type="email" id="email" name="email" class="form-control" placeholder="Email" ng-required="true" autofocus="true" ng-minlength="3" ng-model="user.email" email-validator>
+			<i class="fa" ng-class="{'fa-times': form.email.$dirty && form.email.$invalid, 'fa-check': form.email.$valid}"></i>
+		</div>
+        <div class="form-group">
+            <label for="inputFullName" class="sr-only">Name</label>
+            <input type="text" id="inputFullName" name="inputFullName" class="form-control" placeholder="Full Name" ng-required="true" autofocus="true" ng-minlength="1" ng-model="user.fullName">
+            <i class="fa"></i>
+        </div>
+
+        <div class="form-group">
+            <label for="inputReason" class="sr-only">How do you plan to use ScentSee?</label>
+            <input type="text" id="inputReason" name="inputReason" class="form-control" placeholder="How do you plan to use ScentSee?" ng-required="true" autofocus="true" ng-minlength="3"  ng-model="user.reason">
+            <i class="fa"></i>
+        </div>
+		
+    	<button class="btn special" type="submit" ng-click="requestInvite(user)">Request</button>
+    	
+    	<p class="error" ng-show="inviteMessage.length > 0">{{inviteMessage}}</p>
+        <p ng-show="inviteMessage.length > 0">Please <a href="#contact"> contact us</a> for more information.</p>
+        <p ng-show="inviteMessage.length == 0">Business accounts are available to perfumers, partners and merchants using ScentSee integrated recommendation solutions.</p>
+        <p ng-show="inviteMessage.length == 0">If you already have an account with ScentSee, <span class="emphasis"><a ng-href="{{loginUrl}}">login here</a>.</span></p>
+	    <p>&nbsp;</p>
+    </form>
+</div>
+

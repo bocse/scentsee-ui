@@ -1,0 +1,36 @@
+<div class="loader" ng-show="showRecommendationsLoader"></div>
+
+<div class="wrapper col-lg-12 col-md-12" id="pref">
+
+	<h1>Fragrance Analytics</h1>
+
+    <p>See what note types are popular for each year, for each gender or for each brand.</p>
+
+    <P><input type="checkbox" ng-model="filterYear" ng-click="retrieveAnalytics()"/>Filter by year: <rzslider rz-slider-model="priceSlider.value"  rz-slider-options="priceSlider.options"></rzslider></P>
+    <div class="choices-wrapper" ng-show="showDropDown">
+        Brand:
+        <selectize config='selectizeConfig' options='selectizeOptions' ng-model="selectizeModel" ng-change="retrieveAnalytics(); activateYearFilter()"></selectize>
+
+        <div class="loader-small" ng-show="showSelectizeLoader"></div>
+
+        <p class="error test-desc" ng-show="showNotMatchError">We're sorry, we haven't found any fragrance with this name.</p>
+        <p class="error test-desc" ng-show="showNoSelectionError">You have to select at least one fragrance you like before we recommend others suited for oyu</p>
+
+    </div>
+
+    <div ng-hide="hideGenderBtns">
+        <div class="gender-buttons">
+            <button class="btn default" ng-repeat="button in prefButtons" ng-click="selectGender(button)" ng-class="{'active': selected === button, 'btn-slide': showDropDown == true}">{{button.name}}</button>
+        </div>
+    </div>
+    <br/>
+    <div>
+    <canvas id="bar" class="chart chart-bar"
+            chart-data="data" chart-labels="labels" chart-scales="scales" chart-options="options" chart-series="series">
+    </canvas>
+    </div>
+
+    <div class="clear"></div>
+</div>
+		
+

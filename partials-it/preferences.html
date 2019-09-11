@@ -1,0 +1,91 @@
+<div class="loader" ng-show="showRecommendationsLoader"></div>
+
+<div class="wrapper col-lg-12 col-md-12" id="pref">
+
+	<h1>Discover fragrances starting from your preferences</h1>
+
+	<p class="error test-desc" ng-show="serverError.length > 0">{{serverError}}. Please try again later..</p>
+	
+	<div ng-hide="hideGenderBtns">
+		<p class="test-desc">The fragrance is for:</p>
+		<div class="gender-buttons">
+			<button class="btn default" ng-repeat="button in prefButtons" ng-click="selectGender(button)" ng-class="{'active': selected === button, 'btn-slide': showDropDown == true}">{{button.name}}</button>
+		</div>
+	</div>
+	
+	<div class="choices-wrapper" ng-show="showDropDown">
+		<p class="test-desc">Tell us the fragrances you already like:</p>
+		<selectize config='selectizeConfig' options='selectizeOptions' ng-model="selectizeModel"></selectize>
+		
+		<div class="loader-small" ng-show="showSelectizeLoader"></div>
+		
+		<p class="error test-desc" ng-show="showNotMatchError">We're sorry, we haven't found any fragrance with this name.</p>
+		<p class="error test-desc" ng-show="showNoSelectionError">You have to select at least one fragrance you like before we recommend others suited for oyu</p>
+		<button class="recommendations-button btn special" ng-click="requestRecommendations()">Show me the recommendation</button>
+	</div>
+	
+	<section class="search-results" ng-show="showSearchResultsWrapper">
+		
+		<div class="searched-items-wrapper">
+			<p class="test-desc">Starting from your preferences:</p>
+			<div class="perfume-box" ng-repeat="item in basedOnSearch" ng-click="toggleModal(item)">
+
+				<p class="title">{{item.name}}</p>
+				<p class="uppercase subtitle">{{item.brand}}</p>
+				<div class="description">
+					<span ng-repeat="(key, value) in item.dominantClasses" ng-if="$index < 3">
+						<span class="lowercase">{{scents[key].label}}</span>
+						<div class="fill">
+							<span ng-style="{'width': value + '%'}"></span>
+						</div>
+					</span>
+					<img ng-src="{{getPhotoUrl(item)}}" />
+				</div>
+				<button class="btn special" >Details & prices</button>
+
+            </div>
+		</div>
+		<div class="clear"></div>
+		
+		<div class="recommendations-wrapper">
+			<p class="test-desc" ng-hide="showNoResultsStatus">ScentSee recommends the following fragrances:</p>
+			<div class="perfume-box" ng-repeat="recom in recommendationsList | limitTo: showMoreRecommmendationsBtn ? 4 : 8" ng-click="toggleModal(recom)">
+
+				<p class="title">{{recom.name | limitTo: 20}}</p>
+				<p class="uppercase subtitle">{{recom.brand}}</p>
+				<div class="description">
+					<span ng-repeat="(key, value) in recom.dominantClasses" ng-if="$index < 3">
+						<span class="lowercase">{{scents[key].label}}</span>
+						<div class="fill">
+							<span ng-style="{'width': value + '%'}"></span>
+						</div>
+					</span>
+					<img ng-src="{{getPhotoUrl(recom)}}" />
+				</div>
+				<button class="btn special" >Details & prices</button>
+            </div>
+		</div>
+		<div class="clear"></div>
+		
+		<button class="btn special" ng-click="loadMoreRecommendations()" ng-show="showMoreRecommmendationsBtn">See more recommendations</button>
+		
+		<div class="reset-buttons" ng-hide="showMoreRecommmendationsBtn" ng-show="showResetBtns">
+			<p class="test-desc error" ng-show="showNoResultsStatus">Unfortunately, we haven't found any suitable matches</p>
+			<button class="btn special" ng-click="resetSelectize()">Search again</button>
+			<a class="btn-link" ng-href="#/quiz">Try a lifestyle test for more recommendations</a>
+		</div>
+		<div ng-show="recommendationsList.length > 0" class="copy-uri">
+			<input type="text" id="shareUriInput" ng-model="shareUri" select-on-click />
+			<button class="btn special" ngclipboard data-clipboard-target="#shareUriInput" ng-class="{'copied':isCopied}" ng-click="isCopied= !isCopied">
+				<span ng-if="!isCopied">copy link</span>
+				<span ng-if="isCopied">copied<i class="fa fa-check"></i></span>
+			</button>
+		</div>
+		<p ng-show="recommendationsList.length > 0" class="share-on-fb">Show your friends the fragrances that suit you! <share uri="shareUri"/></p>
+		<div class="clear"></div>
+	</section>
+</div>
+		
+<modal visible="showModal" model="modalContent"></modal>
+
+

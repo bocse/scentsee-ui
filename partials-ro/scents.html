@@ -1,0 +1,14 @@
+<div class="wrapper static" id="scentsPage">
+	<div class="col-lg-12">
+		<h1>O listă cu scurte descrieri pentru arome</h1>
+	</div>
+	<div class="col-lg-12 copy" ng-repeat="(key, value) in scents">
+		<p class="scent-title">		
+			{{scents[key].label}}
+		</p>
+		<p>		
+			{{scents[key].description}}
+		</p>
+	</div>
+	<div class="clear"></div>
+</div>

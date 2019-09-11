@@ -1,0 +1,75 @@
+
+<div class="loader" ng-show="showRecommendationsLoader"></div>
+
+<div class="wrapper col-lg-12 col-md-12" id="pref">
+
+
+
+
+    <h1 ng-hide="hideFooter">Visualize your fragrance</h1>
+    <p>See how the notes of your perfume unfold in an interactive animation.</p>
+    <p style="font-size: 38px" ng-show="hideFooter">
+        <span id="playButton" ng-click="restartAnimation();">&#9654;</span>
+        <span id="pauseButton" ng-click="pauseAnimation();">&#10074;&#10074;</span>
+        <span id="stopButton" ng-click="terminateAnimation();">&#9724;</span>
+    </p>
+
+    <p class="error test-desc" ng-show="serverError.length > 0">{{serverError}}.</p>
+
+    <div ng-hide="hideGenderBtns">
+        <p class="test-desc">Who is the fragrance for:</p>
+        <div class="gender-buttons">
+            <button class="btn default" ng-repeat="button in prefButtons" ng-click="selectGender(button)" ng-class="{'active': selected === button, 'btn-slide': showDropDown == true}">{{button.name}}</button>
+        </div>
+    </div>
+
+    <div class="choices-wrapper" ng-show="showDropDown">
+        <p class="test-desc">What fragrance would you like to see:</p>
+        <selectize config='selectizeConfig' options='selectizeOptions' ng-model="selectizeModel"></selectize>
+
+        <div class="loader-small" ng-show="showSelectizeLoader"></div>
+
+        <p class="error test-desc" ng-show="showNotMatchError">We're sorry, we haven't found any fragrance with this name.</p>
+        <p class="error test-desc" ng-show="showNoSelectionError">You have to selec one fragrance before we can show you how it looks like</p>
+        <button class="recommendations-button btn special" ng-click="doSearch()">Show me how this fragrance unfolds</button>
+    </div>
+
+
+    <div ng-show="hideFooter"  style=" position:absolute" ng-style="{
+                        left:springX,
+                        top:springY
+                        }">
+        <img src="images/visualize/generic/splash-05.png" ng-click="increaseEmission()" />
+        <p>Click to spray more.</p>
+    </div>
+    <div ng-repeat="particle in particles.slice().reverse()">
+        <div class="particle-3" ng-if="particle.visible == true" style="position:absolute"
+             ng-style="{left:particle.x,
+                       top:particle.y}">
+
+            <a ng-click="showTip($event,particle);"  title="{{particle.name}}" >
+                <img ng-src="{{particle.image}}"
+                     ng-style="{
+                        width:particle.w,
+                        height:particle.h
+                        }"
+                        />
+            </a>
+
+        </div>
+
+
+
+
+    </div>
+
+    <div class="reset-buttons"  ng-show="showResetBtns">
+        <p><button class="btn special" ng-click="startAnimation()">Replay animation</button></p>
+
+        <p><button class="btn special" ng-click="resetSelectize()">Search again</button></p>
+    </div>
+
+
+
+</div>
+

@@ -1,0 +1,113 @@
+<div class="loader" ng-show="showRecommendationsLoader"></div>
+
+<div class="wrapper" id="premium">
+	
+	<p class="col-lg-12 error test-desc" ng-show="serverError.length > 0">{{serverError}}. Revino mai târziu.</p>
+	
+	<div class="col-lg-12" ng-hide="hideGenderBtns">
+		<p class="test-desc">Parfumul este:</p>
+		<div class="gender-buttons">
+			<button class="btn default" ng-repeat="button in prefButtons" ng-click="selectGender(button)" ng-class="{'active': selected === button, 'btn-slide': showAdvancedOptions == true}">{{button.name}}</button>
+		</div>
+	</div>
+	<div ng-show="showAdvancedOptions" id="advancedOptions">
+		<div class="slider-wrapper col-lg-12">
+			<p class="test-desc">Interval preț:</p>
+			<rzslider rz-slider-model="priceSlider.min" rz-slider-high="priceSlider.max" rz-slider-options="priceSlider.options"></rzslider>
+		</div>
+		<div class="col-lg-12">
+			<p class="test-desc">Să fie asemănător cu parfumurile:</p>
+			<selectize config='selectizeAffinityConfig' options='selectizeAffinityOptions' ng-model="selectizeAffinityModel"></selectize>
+			
+			<div class="loader-small" ng-show="showSelectizeLoaderAffinity"></div>
+			
+			<p class="error test-desc" ng-show="showNotMatchErrorAffinity">Nu am găsit niciun parfum cu acest nume.</p>
+			<p class="error test-desc" ng-show="serverErrorAffinity.length > 0">{{serverErrorAffinity}}</p>
+		</div>
+		
+		<div class="col-lg-12">
+			<p class="test-desc">Să NU fie asemănător cu parfumurile:</p>
+			<selectize config='selectizeAdversityConfig' options='selectizeAdversityOptions' ng-model="selectizeAdversityModel"></selectize>
+			
+			<div class="loader-small" ng-show="showSelectizeLoaderAdversity"></div>
+			
+			<p class="error test-desc" ng-show="showNotMatchErrorAdversity">Nu am găsit niciun parfum cu acest nume.</p>
+			<p class="error test-desc" ng-show="serverErrorAdversity.length > 0">{{serverErrorAdversity}}</p>
+		</div>
+		
+		<div class="col-lg-12"> 
+			<p class="test-desc">Alege nuanțe olfactive:</p>
+			<button class="btn scent-btn" ng-repeat="(key, value) in scents" value="{{scents[key].label}}" ng-click="addSlider(key)" ng-class="{'active': isSliderInList(key)}">{{scents[key].label}}</button> 
+		</div>
+		
+		<div class="slider-wrapper col-lg-12" ng-repeat="slider in scentSlidersList">
+			<p class="test-desc">{{scents[slider.id].label}}<button type="button" class="close" ng-click="removeSlider(slider.id)">×</button></p>
+			<rzslider rz-slider-model="slider.model" rz-slider-options="slider.options"></rzslider>
+			
+		</div>
+		<div class="custom-input col-lg-12">
+			<p class="test-desc">Caută doar parfumuri de la brandul:</p>
+			<input type="text" ng-model="inputValueBrand" />
+		</div>
+		<div class="custom-input col-lg-12">
+			<p class="test-desc">Caută doar parfumuri cu numele:</p>
+			<input type="text" ng-model="inputValueName" />
+		</div>
+		<div class="checkboxes-wrapper col-lg-12">
+			<p class="test-desc">Caută doar parfumuri de la magazinul online:</p>
+			<span ng-repeat="(key, value) in affiliatesListObj">
+				<p class="inlineB">{{affiliatesListObj[key].label}}</p>
+				<input type="checkbox" ng-model="affiliatesListValues[key]"/>
+			</span>
+		</div>
+		<div class="checkboxes-wrapper col-lg-12">
+			<p class="test-desc inlineB">Caută doar parfumuri care sunt în stoc la partenerii noștri:</p>
+				<input type="checkbox" checked ng-model="stockCheck" />
+		</div>
+		<div class="col-lg-12 reset-buttons">
+			<button class="recommendations-button btn special" ng-click="requestRecommendations()">Arată-mi recomandările</button>
+			<button class="btn special" ng-click="resetAdvancedSearch()">Resetează formularul</button>
+		</div>
+	</div>
+	<div class="clear"></div>
+	
+	<section class="search-results col-lg-12" ng-show="showSearchResultsWrapper">
+	
+		<div class="recommendations-wrapper">
+			<p class="test-desc" ng-hide="showNoResultsStatus">Îți recomandăm parfumurile</p>
+			<div class="perfume-box" ng-repeat="recom in recommendationsList" ng-click="toggleModal(recom)">
+				<p class="title">{{recom.name | limitTo: 20}}</p>
+				<p class="uppercase subtitle">{{recom.brand}}</p>
+				<div class="description">
+					<span ng-repeat="(key, value) in recom.dominantClasses" ng-if="$index < 3">
+						<span class="lowercase">{{scents[key].label}}</span>
+						<div class="fill">
+							<span ng-style="{'width': value + '%'}"></span>
+						</div>
+					</span>
+					<img ng-src="{{getPhotoUrl(recom)}}" />
+				</div>
+				<button class="btn special">Detalii și prețuri</button>
+			</div>
+		</div>
+		<div class="clear"></div>
+		
+		<p class="test-desc error" ng-show="showNoResultsStatus">Nu am găsit niciun rezultat</p>
+		<div class="reset-buttons">
+			<button class="btn special" ng-click="modifyAdvancedSearch()">Modifică formularul</button>
+			<button class="btn special" ng-click="resetAdvancedSearch()">Resetează formularul</button>
+		</div>
+		<div ng-show="recommendationsList.length > 0" class="copy-uri">
+			<input type="text" id="shareUriInput" ng-model="shareUri" select-on-click />
+			<button class="btn special" ngclipboard data-clipboard-target="#shareUriInput" ng-class="{'copied':isCopied}" ng-click="isCopied= !isCopied">
+				<span ng-if="!isCopied">copiază linkul</span>
+				<span ng-if="isCopied">copiat<i class="fa fa-check"></i></span>
+			</button>
+		</div>
+        <p ng-show="recommendationsList.length > 0" class="share-on-fb">Arată prietenilor tăi parfumurile descoperite! <share uri="shareUri"/></p>
+	</section>
+	<div class="clear"></div>
+</div>
+
+<modal visible="showModal" model="modalContent"></modal>
+

@@ -1,0 +1,51 @@
+<div class="wrapper">
+	<section class="search-results">
+		<div ng-show="basedOnSearch.length" class="searched-items-wrapper col-lg-12 col-md-12 col-sm-12">
+			<p class="test-desc">Pornind de la parfumurile mele preferate:</p>
+			<div class="perfume-box" ng-repeat="item in basedOnSearch" ng-click="toggleModal(item)">
+				<p class="title">{{item.name}}</p>
+				<p class="uppercase subtitle">{{item.brand}}</p>
+				<div class="description">
+					<span ng-repeat="(key, value) in item.dominantClasses" ng-if="$index < 3">
+						<span class="lowercase">{{scents[key].label}}</span>
+						<div class="fill">
+							<span ng-style="{'width': value + '%'}"></span>
+						</div>
+					</span>
+					<img ng-src="{{getPhotoUrl(item)}}" />
+				</div>
+				<button class="btn special" >Detalii și prețuri</button>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="recommendations-wrapper col-lg-12 col-md-12 col-sm-12">
+			<p class="test-desc" ng-hide="showNoResultsStatus">Am descoperit parfumuri noi:</p>
+			<div class="perfume-box" ng-repeat="recom in recommendationsList" ng-click="toggleModal(recom)">
+				<p class="title">{{recom.name | limitTo: 20}}</p>
+				<p class="uppercase subtitle">{{recom.brand}}</p>
+				<div class="description">
+					<span ng-repeat="(key, value) in recom.dominantClasses" ng-if="$index < 3">
+						<span class="lowercase">{{scents[key].label}}</span>
+						<div class="fill">
+							<span ng-style="{'width': value + '%'}"></span>
+						</div>
+					</span>
+					<img ng-src="{{getPhotoUrl(recom)}}" />
+				</div>
+				<button class="btn special">Detalii și prețuri</button>
+			</div>
+		</div>
+		<div class="clear"></div>
+		
+		<div class="navigation-buttons col-lg-12 col-md-12 col-sm-12">
+			<a class="btn-link" ng-href="#/preference">Caută parfumuri pornind de la preferințe</a>
+			<a class="btn-link" ng-href="#/quiz">Fă un test pentru a descoperi parfumuri noi</a>
+		</div>
+		<div class="clear"></div>
+
+
+
+	</section>
+</div>
+		
+<modal visible="showModal" model="modalContent"></modal>
